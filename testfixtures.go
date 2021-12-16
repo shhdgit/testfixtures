@@ -1,4 +1,4 @@
-package testfixtures // import "github.com/go-testfixtures/testfixtures/v3"
+package testfixtures // import "github.com/shhdgit/testfixtures/v3"
 
 import (
 	"bytes"

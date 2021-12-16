@@ -11,7 +11,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/spf13/pflag"
 
-	"github.com/go-testfixtures/testfixtures/v3"
+	"github.com/shhdgit/testfixtures/v3"
 )
 
 var version = "master"

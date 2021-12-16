@@ -3,7 +3,6 @@ module github.com/shhdgit/testfixtures/v3
 require (
 	github.com/denisenkom/go-mssqldb v0.11.0
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/go-testfixtures/testfixtures/v3 v3.0.0-00010101000000-000000000000
 	github.com/jackc/pgx/v4 v4.6.0
 	github.com/joho/godotenv v1.4.0
 	github.com/lib/pq v1.10.3
@@ -13,5 +12,3 @@ require (
 )
 
 go 1.13
-
-replace github.com/go-testfixtures/testfixtures/v3 => ./
