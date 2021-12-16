@@ -118,6 +118,8 @@ func helperForDialect(dialect string) (helper, error) {
 		return &sqlite{}, nil
 	case "mssql", "sqlserver":
 		return &sqlserver{}, nil
+	case "tidb":
+		return &tidb{}, nil
 	default:
 		return nil, fmt.Errorf(`testfixtures: unrecognized dialect "%s"`, dialect)
 	}
