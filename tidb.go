@@ -12,7 +12,7 @@ type tidb struct {
 	resetSequencesTo   int64
 
 	tables         []string
-	tablesChecksum map[string]int64
+	tablesChecksum map[string]float64
 }
 
 func (h *tidb) init(db *sql.DB) error {
@@ -132,7 +132,7 @@ func (h *tidb) afterLoad(q queryable) error {
 		return nil
 	}
 
-	h.tablesChecksum = make(map[string]int64, len(h.tables))
+	h.tablesChecksum = make(map[string]float64, len(h.tables))
 	for _, t := range h.tables {
 		checksum, err := h.getChecksum(q, t)
 		if err != nil {
@@ -143,17 +143,20 @@ func (h *tidb) afterLoad(q queryable) error {
 	return nil
 }
 
-func (h *tidb) getChecksum(q queryable, tableName string) (int64, error) {
+func (h *tidb) getChecksum(q queryable, tableName string) (float64, error) {
 	query := fmt.Sprintf("ADMIN CHECKSUM TABLE %s", h.quoteKeyword(tableName))
 	var (
-		table    string
-		checksum sql.NullInt64
+		dbName     string
+		table      string
+		checksum   sql.NullFloat64
+		totalKvs   sql.NullFloat64
+		totalBytes sql.NullFloat64
 	)
-	if err := q.QueryRow(query).Scan(&table, &checksum); err != nil {
+	if err := q.QueryRow(query).Scan(&dbName, &table, &checksum, &totalKvs, &totalBytes); err != nil {
 		return 0, err
 	}
 	if !checksum.Valid {
 		return 0, fmt.Errorf("testfixtures: table %s does not exist", tableName)
 	}
-	return checksum.Int64, nil
+	return checksum.Float64, nil
 }
